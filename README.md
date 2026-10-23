@@ -97,3 +97,21 @@ programs.git = {
 
 - `home/AGENTS.md` is my own agent policy and gets installed for Claude, Codex, and opencode.
 - The `cc` and `co` aliases run `claude --dangerously-skip-permissions` and `codex --full-auto`. They skip confirmations on purpose. Know that before you use them.
+
+## Layout
+
+- `flake.nix`: entry point. Pulls in nixpkgs, nix-darwin, home-manager, and nix-homebrew.
+- `configuration.nix`: system level (macOs defaults, Homebrew).
+- `home.nix`: user level (shell, packages, prompt, symlinks).
+- `rebuild.sh`: applies the config after any change.
+- `home/`: the real config files that get linked into your home directory.
+
+## How the linking works
+
+Files in `home/` are the live config, not copies.
+`home.nix` uses `mkOutOfStoreSymlink` so paths like `~/.config/nvim` point directly at `home/.config/nvim` in this repo. Edits show up immediately, with no rebuild needed. You only need the `rebuild.sh` when you change something Nix builds, like a package list or a system default.
+
+## Notes
+
+- The first time you open `nvim`, lazy.nvim clones its plugins from GitHub, so you need network access once. After that it works offline.
+- Neovim and WezTerm share the rose-pine moon theme. Neovim has italics off and a transparent background on macOS, Windows, and WSL so it blends with the terminal.
