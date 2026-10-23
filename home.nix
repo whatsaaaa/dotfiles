@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/.dotfiles";
+  dotnet = pkgs.dotnetCorePackages.sdk_10_0;
 in
 
 {
@@ -18,10 +19,25 @@ in
     neovim
     # the font everything renders in
     nerd-fonts.hack
+    dotnet    # .NET SDK
   ];
   fonts.fontconfig.enable = true;
-  home.sessionVariables.EDITOR = "nvim";
-  home.sessionPath = [ "$HOME/.local/bin" ];
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    DOTNET_ROOT = "${dotnet}/share/dotnet";
+    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+  };
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.dotnet/tools"
+  ];
+
+  home.activation.aspireCli = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      if [ ! -x "$HOME/.dotnet/tools/aspire" ]; then
+        export DOTNET_ROOT="${dotnet}/share/dotnet"
+        run ${dotnet}/bin/dotnet tool install -g Aspire.Cli
+      fi
+    '';
 
   programs.zsh = {
     enable = true;

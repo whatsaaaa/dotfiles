@@ -38,6 +38,7 @@ It's public so you can read it, steal ideas, or fork it.
 | **Editor** | Neovim + [lazy.nvim](https://github.com/folke/lazy.nvim), rose-pine moon theme |
 | **Terminal** | WezTerm, rose-pine moon theme, dimmed unfocused panes |
 | **AI agents** | Claude, Codex, and opencode all share one `AGENTS.md` |
+| **.NET** | .NET 10 SDK via Nix, `DOTNET_ROOT` set, global tools (`~/.dotnet/tools`) on `PATH` |
  
 ## Prerequisites
  
