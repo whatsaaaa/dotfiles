@@ -115,3 +115,7 @@ Files in `home/` are the live config, not copies.
 
 - The first time you open `nvim`, lazy.nvim clones its plugins from GitHub, so you need network access once. After that it works offline.
 - Neovim and WezTerm share the rose-pine moon theme. Neovim has italics off and a transparent background on macOS, Windows, and WSL so it blends with the terminal.
+
+## License
+
+MIT. See `LICENSE`.
