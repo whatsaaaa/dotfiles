@@ -19,16 +19,20 @@ in
     neovim
     # the font everything renders in
     nerd-fonts.hack
-    dotnet    # .NET SDK
+    dotnet        # .NET SDK
+    nodejs_latest # Node
+    pnpm          # PNPM package manager
   ];
   fonts.fontconfig.enable = true;
   home.sessionVariables = {
     EDITOR = "nvim";
     DOTNET_ROOT = "${dotnet}/share/dotnet";
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+    PNPM_HOME = "$HOME/.local/share/pnpm";
   };
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/.local/share/pnpm"
     "$HOME/.dotnet/tools"
   ];
 
