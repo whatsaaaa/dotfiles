@@ -32,7 +32,7 @@ in
   };
   home.sessionPath = [
     "$HOME/.local/bin"
-    "$HOME/.local/share/pnpm"
+    "$HOME/.local/share/pnpm/bin" # pnpm 11 puts global bins here
     "$HOME/.dotnet/tools"
   ];
 
@@ -41,6 +41,28 @@ in
         export DOTNET_ROOT="${dotnet}/share/dotnet"
         run ${dotnet}/bin/dotnet tool install -g Aspire.Cli
       fi
+    '';
+
+  # Firstmate's AXI CLIs live on npm, not nixpkgs. Their Claude Code hooks are
+  # committed in home/.claude/settings.json, so `setup hooks` never needs to run.
+  home.activation.axiTools = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      (
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        export PATH="$PNPM_HOME/bin:${pkgs.nodejs_latest}/bin:$PATH"
+        installed=$(${pkgs.pnpm}/bin/pnpm ls -g --depth 0 --json 2>/dev/null \
+          | ${pkgs.jq}/bin/jq -c '[.[].dependencies // {} | to_entries[] | {(.key): .value.version}] | add // {}') \
+          || installed='{}'
+        specs=()
+        for tool in gh-axi chrome-devtools-axi tasks-axi quota-axi; do
+          ${pkgs.jq}/bin/jq -e --arg t "$tool" 'has($t)' <<<"$installed" >/dev/null || specs+=("$tool")
+        done
+        ${pkgs.jq}/bin/jq -e '(."lavish-axi" // "0") | try (split(".") | map(tonumber) >= [0, 1, 77]) catch false' \
+          <<<"$installed" >/dev/null || specs+=("lavish-axi@>=0.1.77")
+        if [ ''${#specs[@]} -gt 0 ]; then
+          run ${pkgs.pnpm}/bin/pnpm add -g "''${specs[@]}" \
+            || warnEcho "pnpm could not install ''${specs[*]}; run ./rebuild.sh again once the network is back"
+        fi
+      )
     '';
 
   programs.zsh = {
