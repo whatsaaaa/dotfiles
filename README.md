@@ -38,7 +38,7 @@ It's public so you can read it, steal ideas, or fork it.
 | **Editor** | Neovim + [lazy.nvim](https://github.com/folke/lazy.nvim), rose-pine moon theme |
 | **Terminal** | WezTerm, rose-pine moon theme, dimmed unfocused panes |
 | **AI agents** | Claude, Codex, and opencode all share one `AGENTS.md` |
-| **AXI tools** | `gh-axi`, `chrome-devtools-axi`, `tasks-axi`, `quota-axi`, `lavish-axi` installed globally with pnpm on rebuild, their Claude Code hooks in `home/.claude/settings.json` |
+| **AXI tools** | `gh-axi`, `chrome-devtools-axi`, `tasks-axi`, `quota-axi`, `lavish-axi` installed globally with pnpm on rebuild; Claude Code hooks for `gh-axi`, `chrome-devtools-axi` and `lavish-axi` in `home/.claude/settings.json` |
 | **.NET** | .NET 10 SDK via Nix, `DOTNET_ROOT` set, global tools (`~/.dotnet/tools`) on `PATH` |
  
 ## Prerequisites
