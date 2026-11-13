@@ -1,3 +1,5 @@
+<p align="center"><img alt="dotfiles - my macOS setup, written down as code" src=".github/assets/readme-header.svg" width="100%"></p>
+
 <h1 align="center">dotfiles</h1>
 <p align="center"><strong>My macOS setup, written down as code.&nbsp;</strong><br>
 One repo, a few commands, and a fresh Mac looks exactly like my last one.</p>
