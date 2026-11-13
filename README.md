@@ -230,4 +230,4 @@ Neovim and WezTerm both use **rose-pine moon**. Neovim has italics off and a tra
  
 ## License
  
-[MIT](LICENSE).
+[MIT](LICENSE), except the Whatsaaaa artwork in `.github/assets/`, which is not covered by the MIT License; see [.github/assets/LICENSE](.github/assets/LICENSE).
