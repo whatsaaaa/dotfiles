@@ -93,11 +93,11 @@ Skip this step only if you're me. Otherwise, open these files and adjust:
  
 | What | Where | Change it to |
 | --- | --- | --- |
-| **Username** | the `user = "..."` line in `flake.nix` | your macOS username (run `whoami`) |
-| **Host label** | `darwinConfigurations."mac"` in `flake.nix` **and** `#mac` in `rebuild.sh` | any name, as long as both match |
-| **CPU** | `nixpkgs.hostPlatform` in `configuration.nix` | `"x86_64-darwin"` on Intel, leave as is on Apple Silicon |
+| **Username** | `user = "..."` and `home-manager.users.whatsaaaa` in `flake.nix`, plus `home.username` and `home.homeDirectory` in `home.nix` | your macOS username (run `whoami`); `home.homeDirectory` becomes `/Users/<username>` |
+| **Host label** | `darwinConfigurations."whatsaaaa-mac"` in `flake.nix` **and** `HOST="whatsaaaa-mac"` in `rebuild.sh` | any name, as long as both match |
+| **CPU** | `nixpkgs.hostPlatform` in `configuration.nix` | `"aarch64-darwin"` on Apple Silicon, `"x86_64-darwin"` on Intel |
  
-Every path in `configuration.nix` and `home.nix` is derived from `user`, so that one line is enough.
+`configuration.nix` derives its paths from `user`, but `home.nix` and the `home-manager.users` line in `flake.nix` don't read it, so change all four username spots together.
  
 ### 5. Review the Homebrew list
  
@@ -118,17 +118,17 @@ Make sure everything evaluates before you let it touch your system:
  
 ```sh
 nix flake check --no-build
-nix build .#darwinConfigurations.mac.system --dry-run
+nix build .#darwinConfigurations.whatsaaaa-mac.system --dry-run
 ```
  
-Use your own host label instead of `mac` if you changed it.
+Use your own host label instead of `whatsaaaa-mac` if you changed it.
  
 ### 8. Run the first switch
  
 `darwin-rebuild` isn't installed yet, so run it straight from nix-darwin:
  
 ```sh
-sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#mac
+sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#whatsaaaa-mac
 ```
  
 ### 9. Finish up
@@ -186,7 +186,7 @@ If you already have files like `~/.zshrc` or `~/.config/nvim`, home-manager refu
  
 ### The host label lives in more than one place
  
-`flake.nix` and `rebuild.sh` both reference `mac`. If they disagree, the build fails with an error saying the configuration doesn't exist. Rename both together.
+`flake.nix` and `rebuild.sh` both reference `whatsaaaa-mac`. If they disagree, the build fails with an error saying the configuration doesn't exist. Rename both together.
  
 ### You inherit my AI agent rules
  
@@ -213,7 +213,7 @@ The first `nvim` launch clones every plugin from GitHub. Offline, it starts with
  
 ```
 .
-├── flake.nix            # entry point: inputs, user, and the "mac" host
+├── flake.nix            # entry point: inputs, user, and the "whatsaaaa-mac" host
 ├── configuration.nix    # system level: macOS defaults, Homebrew
 ├── home.nix             # user level: shell, packages, prompt, symlinks
 ├── rebuild.sh           # re-apply the config after a change
