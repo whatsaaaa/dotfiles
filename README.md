@@ -4,7 +4,7 @@
 <p align="center"><strong>My macOS setup, written down as code.&nbsp;</strong><br>
 One repo, a few commands, and a fresh Mac looks exactly like my last one.</p>
 <p align="center">
-  <img alt="macOS" src="https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=flat-square&logo=apple&logoColor=white">
+  <img alt="macOS" src="https://img.shields.io/badge/macOS-Intel-000000?style=flat-square&logo=apple&logoColor=white">
   <img alt="Built with Nix" src="https://img.shields.io/badge/built%20with-Nix-5277C3?style=flat-square&logo=nixos&logoColor=white">
   <img alt="nix-darwin" src="https://img.shields.io/badge/nix--darwin-26.05-7EBAE4?style=flat-square">
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square">
@@ -47,7 +47,7 @@ It's public so you can read it, steal ideas, or fork it.
  
 Before you start, make sure you have:
  
-- [ ] **A Mac with Apple Silicon** (M1 or newer). Intel works too with a one-line change, see [step 4](#4-make-it-yours).
+- [ ] **An Intel Mac**, which is what this config targets. Apple Silicon (M1 or newer) works too with a one-line `hostPlatform` change, see [step 4](#4-make-it-yours). On Apple Silicon you can also uncomment the `herdr` brew in `configuration.nix`.
 - [ ] **An admin account.** The first switch changes system settings and needs `sudo`.
 - [ ] **Internet access.** Nix, Homebrew, and Neovim plugins are all downloaded on first run.
 - [ ] **Xcode Command Line Tools**, step 1 covers this.
