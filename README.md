@@ -1,8 +1,10 @@
+<p align="center"><img alt="dotfiles - my macOS setup, written down as code" src=".github/assets/readme-header.svg" width="100%"></p>
+
 <h1 align="center">dotfiles</h1>
 <p align="center"><strong>My macOS setup, written down as code.&nbsp;</strong><br>
 One repo, a few commands, and a fresh Mac looks exactly like my last one.</p>
 <p align="center">
-  <img alt="macOS" src="https://img.shields.io/badge/macOS-Apple%20Silicon-000000?style=flat-square&logo=apple&logoColor=white">
+  <img alt="macOS" src="https://img.shields.io/badge/macOS-Intel-000000?style=flat-square&logo=apple&logoColor=white">
   <img alt="Built with Nix" src="https://img.shields.io/badge/built%20with-Nix-5277C3?style=flat-square&logo=nixos&logoColor=white">
   <img alt="nix-darwin" src="https://img.shields.io/badge/nix--darwin-26.05-7EBAE4?style=flat-square">
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square">
@@ -45,7 +47,7 @@ It's public so you can read it, steal ideas, or fork it.
  
 Before you start, make sure you have:
  
-- [ ] **A Mac with Apple Silicon** (M1 or newer). Intel works too with a one-line change, see [step 4](#4-make-it-yours).
+- [ ] **An Intel Mac**, which is what this config targets. Apple Silicon (M1 or newer) works too with a one-line `hostPlatform` change, see [step 4](#4-make-it-yours). On Apple Silicon you can also uncomment the `herdr` brew in `configuration.nix`.
 - [ ] **An admin account.** The first switch changes system settings and needs `sudo`.
 - [ ] **Internet access.** Nix, Homebrew, and Neovim plugins are all downloaded on first run.
 - [ ] **Xcode Command Line Tools**, step 1 covers this.
@@ -91,11 +93,11 @@ Skip this step only if you're me. Otherwise, open these files and adjust:
  
 | What | Where | Change it to |
 | --- | --- | --- |
-| **Username** | the `user = "..."` line in `flake.nix` | your macOS username (run `whoami`) |
-| **Host label** | `darwinConfigurations."mac"` in `flake.nix` **and** `#mac` in `rebuild.sh` | any name, as long as both match |
-| **CPU** | `nixpkgs.hostPlatform` in `configuration.nix` | `"x86_64-darwin"` on Intel, leave as is on Apple Silicon |
+| **Username** | `user = "..."` and `home-manager.users.whatsaaaa` in `flake.nix`, plus `home.username` and `home.homeDirectory` in `home.nix` | your macOS username (run `whoami`); `home.homeDirectory` becomes `/Users/<username>` |
+| **Host label** | `darwinConfigurations."whatsaaaa-mac"` in `flake.nix` **and** `HOST="whatsaaaa-mac"` in `rebuild.sh` | any name, as long as both match |
+| **CPU** | `nixpkgs.hostPlatform` in `configuration.nix` | `"aarch64-darwin"` on Apple Silicon, `"x86_64-darwin"` on Intel |
  
-Every path in `configuration.nix` and `home.nix` is derived from `user`, so that one line is enough.
+`configuration.nix` derives its paths from `user`, but `home.nix` and the `home-manager.users` line in `flake.nix` don't read it, so change all four username spots together.
  
 ### 5. Review the Homebrew list
  
@@ -116,17 +118,17 @@ Make sure everything evaluates before you let it touch your system:
  
 ```sh
 nix flake check --no-build
-nix build .#darwinConfigurations.mac.system --dry-run
+nix build .#darwinConfigurations.whatsaaaa-mac.system --dry-run
 ```
  
-Use your own host label instead of `mac` if you changed it.
+Use your own host label instead of `whatsaaaa-mac` if you changed it.
  
 ### 8. Run the first switch
  
 `darwin-rebuild` isn't installed yet, so run it straight from nix-darwin:
  
 ```sh
-sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#mac
+sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#whatsaaaa-mac
 ```
  
 ### 9. Finish up
@@ -184,7 +186,7 @@ If you already have files like `~/.zshrc` or `~/.config/nvim`, home-manager refu
  
 ### The host label lives in more than one place
  
-`flake.nix` and `rebuild.sh` both reference `mac`. If they disagree, the build fails with an error saying the configuration doesn't exist. Rename both together.
+`flake.nix` and `rebuild.sh` both reference `whatsaaaa-mac`. If they disagree, the build fails with an error saying the configuration doesn't exist. Rename both together.
  
 ### You inherit my AI agent rules
  
@@ -211,7 +213,7 @@ The first `nvim` launch clones every plugin from GitHub. Offline, it starts with
  
 ```
 .
-├── flake.nix            # entry point: inputs, user, and the "mac" host
+├── flake.nix            # entry point: inputs, user, and the "whatsaaaa-mac" host
 ├── configuration.nix    # system level: macOS defaults, Homebrew
 ├── home.nix             # user level: shell, packages, prompt, symlinks
 ├── rebuild.sh           # re-apply the config after a change
@@ -228,4 +230,4 @@ Neovim and WezTerm both use **rose-pine moon**. Neovim has italics off and a tra
  
 ## License
  
-[MIT](LICENSE).
+[MIT](LICENSE), except the Whatsaaaa artwork in `.github/assets/`, which is not covered by the MIT License; see [.github/assets/LICENSE](.github/assets/LICENSE).

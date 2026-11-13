@@ -16,8 +16,8 @@
 
   outputs = inputs@{ self, nixpkgs, nix-darwin, nix-homebrew, home-manager }:
     let
-      # The one username line to change if this isn't your machine.
-      # bootstrap.sh offers to rewrite this for you if your macOS username differs.
+      # Your macOS username. home-manager.users below and home.nix don't read it,
+      # so change those too if this isn't your machine (README step 4 lists them).
       user = "whatsaaaa";
     in
     {
