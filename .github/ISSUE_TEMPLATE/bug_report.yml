@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a real bug in this config. Feature requests are not accepted.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a personal config, not a framework. Please only report something that is broken.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Describe the bug.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `./rebuild.sh`
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: macOS 26.1
+    validations:
+      required: true
+  - type: input
+    id: machine
+    attributes:
+      label: Machine
+      placeholder: MacBook Pro, Apple M4
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Error messages or logs. This is rendered as code, so no backticks are needed.
+      render: shell
