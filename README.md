@@ -27,7 +27,7 @@ This repo configures a whole Mac declaratively with [nix-darwin](https://github.
 It's public so you can read it, steal ideas, or fork it.
  
 > [!NOTE]
-> This is a personal config, not a framework. Feature requests and pull requests aren't accepted (PRs are closed automatically). If you find a real bug, open an issue using the bug report template.
+> This is a personal config, not a framework. Feature requests and pull requests aren't accepted (only collaborators can open PRs). If you find a real bug, open an issue using the bug report template.
  
 ## What's inside
  
